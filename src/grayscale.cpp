@@ -614,6 +614,29 @@ int main()
 
     // atividade 3 Limiarização (tons de cinza e colorida)
     // atividade 4 Isolar Canais de Cores (colorida)
+    Mat imageRed = imread("../image/imagem_original.jpg");
+    Mat imageBlue = imread("../image/imagem_original.jpg");
+    Mat imageGreen = imread("../image/imagem_original.jpg");
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+            uchar blue = pixel[0];
+            uchar green = pixel[1];
+            uchar red = pixel[2];
+
+            imageBlue.at<Vec3b>(i, j)[0] = blue;
+            imageGreen.at<Vec3b>(i, j)[1] = green;
+            imageRed.at<Vec3b>(i, j)[2] = red;
+        }
+    }
+
+    imwrite("../image/imageRed.jpg", imageRed);
+    imwrite("../image/imageGreen.jpg", imageGreen);
+    imwrite("../image/imageBlue.jpg", imageBlue);
+
     // atividade 5 Histograma (colorida e tons de cinza)
     // atividade 6 Inverso da imagem
     return 0; // Retorna 0, indicando que o programa terminou com sucesso
