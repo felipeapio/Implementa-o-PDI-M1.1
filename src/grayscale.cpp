@@ -15,10 +15,29 @@ int main()
         return 1;
     }
 
-    // Cria uma nova imagem em tons de cinza com o mesmo tamanho, mas 1 canal
+    // Cria uma nova imagem em tons de cinza com o mesmo tamanho utilizando Media aritmética
+    Mat grayImageAritmetica(image.rows, image.cols, CV_8UC1);
+    // Aqui vamos percorre cada pixel (linha e coluna obviamente) da imagem original
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+            uchar blue = pixel[0];
+            uchar green = pixel[1];
+            uchar red = pixel[2];
+
+            int gray = (blue + green + red) / 3;
+
+            // Define o valor na imagem em tons de cinza
+            grayImageAritmetica.at<uchar>(i, j) = gray;
+        }
+    }
+
+    // Cria uma nova imagem em tons de cinza com o mesmo tamanho utilizando Media Ponderada
+    // https://e2eml-school.translate.goog/convert_rgb_to_grayscale.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc
     Mat grayImage(image.rows, image.cols, CV_8UC1);
 
-    // Aqui vamos percorre cada pixel (linha e coluna obviamente) da imagem original
     for (int i = 0; i < image.rows; i++)
     {
         for (int j = 0; j < image.cols; j++)
@@ -35,7 +54,9 @@ int main()
             grayImage.at<uchar>(i, j) = gray;
         }
     }
-    imwrite("../image/imagem_cinza.jpg", grayImage); // salvando a nova imagem ao qual alteramos para cinza
+
+    imwrite("../image/imagem_cinza_ponderada.jpg", grayImage);            // salvando a nova imagem ao qual alteramos para cinza Ponderada
+    imwrite("../image/imagem_cinza_aritmetica.jpg", grayImageAritmetica); // salvando a nova imagem ao qual alteramos para cinza Aritmetica
 
     // atividade 2 Operações Aritméticas (+ - * /)
     // coloridas e tons de cinza
