@@ -639,5 +639,37 @@ int main()
 
     // atividade 5 Histograma (colorida e tons de cinza)
     // atividade 6 Inverso da imagem
+Mat invertedImageColor(image.rows, image.cols, CV_8UC3);
+Mat invertedImageGray(grayImage.rows, grayImage.cols, CV_8UC1);
+
+// Inversão para imagem colorida (cada canal BGR)
+for (int i = 0; i < image.rows; i++)
+{
+    for (int j = 0; j < image.cols; j++)
+    {
+        Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+        
+        // Inverte cada canal individualmente
+        invertedImageColor.at<Vec3b>(i, j)[0] = 255 - pixel[0]; // Canal Blue
+        invertedImageColor.at<Vec3b>(i, j)[1] = 255 - pixel[1]; // Canal Green
+        invertedImageColor.at<Vec3b>(i, j)[2] = 255 - pixel[2]; // Canal Red
+    }
+}
+
+// Inversão para imagem em tons de cinza
+for (int i = 0; i < grayImage.rows; i++)
+{
+    for (int j = 0; j < grayImage.cols; j++)
+    {
+        uchar pixel = grayImage.at<uchar>(i, j); // Acessa o pixel em tons de cinza
+        
+        // Inverte o valor do pixel
+        invertedImageGray.at<uchar>(i, j) = 255 - pixel;
+    }
+}
+
+// Salvando as imagens invertidas
+imwrite("../image/imagem_invertida_colorida.jpg", invertedImageColor);
+imwrite("../image/imagem_invertida_cinza.jpg", invertedImageGray);
     return 0; // Retorna 0, indicando que o programa terminou com sucesso
 }
