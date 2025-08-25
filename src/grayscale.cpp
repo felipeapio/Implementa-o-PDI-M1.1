@@ -650,6 +650,7 @@ int main()
     {
         for (int j = 0; j < image.cols; j++)
         {
+            // Vec3b pois armazena os 3 canais que é o caso de imagens coloridas
             Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
             pixel[0] = 255 - pixel[0];           // blue
             pixel[1] = 255 - pixel[1];           // green
@@ -661,18 +662,14 @@ int main()
         }
     }
 
-    for (int i = 0; i < image.rows; i++)
+    for (int i = 0; i < grayImage.rows; i++)
     {
-        for (int j = 0; j < image.cols; j++)
+        for (int j = 0; j < grayImage.cols; j++)
         {
-            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
-            pixel[0] = 255 - pixel[0];           // blue
-            pixel[1] = 255 - pixel[1];           // green
-            pixel[2] = 255 - pixel[2];           // red
+            // uchar pois armazena apenas um valor que é o caso de imagens com tons de cinza
+            uchar pixel = grayImage.at<uchar>(i, j); // Acessa o pixel (B, G, R)
 
-            imageGrayInvertida.at<Vec3b>(i, j)[0] = pixel[0];
-            imageGrayInvertida.at<Vec3b>(i, j)[1] = pixel[1];
-            imageGrayInvertida.at<Vec3b>(i, j)[2] = pixel[2];
+            imageGrayInvertida.at<uchar>(i, j) = 255 - pixel;
         }
     }
 
