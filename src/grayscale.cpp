@@ -652,8 +652,8 @@ int main()
         {
             Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
             pixel[0] = 255 - pixel[0];           // blue
-            pixel[1] = 255 - pixel[0];           // green
-            pixel[2] = 255 - pixel[0];           // red
+            pixel[1] = 255 - pixel[1];           // green
+            pixel[2] = 255 - pixel[2];           // red
 
             imageColoridaInvertida.at<Vec3b>(i, j)[0] = pixel[0];
             imageColoridaInvertida.at<Vec3b>(i, j)[1] = pixel[1];
@@ -667,8 +667,8 @@ int main()
         {
             Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
             pixel[0] = 255 - pixel[0];           // blue
-            pixel[1] = 255 - pixel[0];           // green
-            pixel[2] = 255 - pixel[0];           // red
+            pixel[1] = 255 - pixel[1];           // green
+            pixel[2] = 255 - pixel[2];           // red
 
             imageGrayInvertida.at<Vec3b>(i, j)[0] = pixel[0];
             imageGrayInvertida.at<Vec3b>(i, j)[1] = pixel[1];
