@@ -488,7 +488,7 @@ int main()
             uchar blue = pixel[0];
             uchar green = pixel[1];
             uchar red = pixel[2];
-            int plus = red + green + +50;
+            int plus = red + green + 50;
             if (plus > 255)
             {
                 plus = 255;
@@ -613,6 +613,57 @@ int main()
     imwrite("../image/grayImagem_divisao_escalar.jpg", divisionImageEscalar);
 
     // atividade 3 Limiarização (tons de cinza e colorida)
+    // https://medium.com/@tharindad7/image-binarization-in-a-nutshell-b40b63c0228e
+    Mat imageLimiarColorida(image.rows, image.cols, CV_8UC3);
+    Mat imageGrayLimiar(grayImage.rows, grayImage.cols, CV_8UC3);
+    double limiar = 127.5; // posso definir qualquer valor vas escolhi o valor que fica no meio de 0 a 255
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (pixel[i] < limiar)
+                {
+                    pixel[i] = 0;
+                }
+                else
+                {
+                    pixel[i] = 255;
+                }
+            }
+
+            imageLimiarColorida.at<Vec3b>(i, j) = pixel;
+        }
+    }
+
+    for (int i = 0; i < grayImage.rows; i++)
+    {
+        for (int j = 0; j < grayImage.cols; j++)
+        {
+            uchar pixel = grayImage.at<uchar>(i, j);
+
+            if (pixel < limiar)
+            {
+                pixel = 0;
+            }
+            else
+            {
+                pixel = 255;
+            }
+
+            imageGrayLimiar.at<Vec3b>(i, j)[0] = pixel;
+            imageGrayLimiar.at<Vec3b>(i, j)[1] = pixel;
+            imageGrayLimiar.at<Vec3b>(i, j)[2] = pixel;
+        }
+    }
+
+    imwrite("../image/imageLimiarColorida.jpg", imageLimiarColorida);
+    imwrite("../image/imageGrayLimiar.jpg", imageGrayLimiar);
+
     // atividade 4 Isolar Canais de Cores (colorida)
     Mat imageRed = imread("../image/rosto.jpg");
     Mat imageBlue = imread("../image/rosto.jpg");
