@@ -614,9 +614,9 @@ int main()
 
     // atividade 3 Limiarização (tons de cinza e colorida)
     // atividade 4 Isolar Canais de Cores (colorida)
-    Mat imageRed = imread("../image/imagem_original.jpg");
-    Mat imageBlue = imread("../image/imagem_original.jpg");
-    Mat imageGreen = imread("../image/imagem_original.jpg");
+    Mat imageRed = imread("../image/rosto.jpg");
+    Mat imageBlue = imread("../image/rosto.jpg");
+    Mat imageGreen = imread("../image/rosto.jpg");
 
     for (int i = 0; i < image.rows; i++)
     {
@@ -633,11 +633,51 @@ int main()
         }
     }
 
-    imwrite("../image/imageRed.jpg", imageRed);
-    imwrite("../image/imageGreen.jpg", imageGreen);
-    imwrite("../image/imageBlue.jpg", imageBlue);
+    imwrite("../image/rostoRed.jpg", imageRed);
+    imwrite("../image/rostoGreen.jpg", imageGreen);
+    imwrite("../image/rostoBlue.jpg", imageBlue);
 
     // atividade 5 Histograma (colorida e tons de cinza)
+
     // atividade 6 Inverso da imagem
+    // https://wiki.portugal-a-programar.pt/dev_net/vb.net/inverter_cor/
+    // https://www.reddit.com/r/askscience/comments/lamdi6/how_can_colors_be_inverted/?tl=pt-br
+    // inverter a cor de uma imagem seria subtrair o valor de seu pixel de 255 dessa forma nos estariamos pegando o seu inverso no circulo cromatico
+    Mat imageColoridaInvertida(image.rows, image.cols, CV_8UC3);
+    Mat imageGrayInvertida(grayImage.rows, grayImage.cols, CV_8UC3);
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+            pixel[0] = 255 - pixel[0];           // blue
+            pixel[1] = 255 - pixel[0];           // green
+            pixel[2] = 255 - pixel[0];           // red
+
+            imageColoridaInvertida.at<Vec3b>(i, j)[0] = pixel[0];
+            imageColoridaInvertida.at<Vec3b>(i, j)[1] = pixel[1];
+            imageColoridaInvertida.at<Vec3b>(i, j)[2] = pixel[2];
+        }
+    }
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            Vec3b pixel = image.at<Vec3b>(i, j); // Acessa o pixel (B, G, R)
+            pixel[0] = 255 - pixel[0];           // blue
+            pixel[1] = 255 - pixel[0];           // green
+            pixel[2] = 255 - pixel[0];           // red
+
+            imageGrayInvertida.at<Vec3b>(i, j)[0] = pixel[0];
+            imageGrayInvertida.at<Vec3b>(i, j)[1] = pixel[1];
+            imageGrayInvertida.at<Vec3b>(i, j)[2] = pixel[2];
+        }
+    }
+
+    imwrite("../image/imageColoridaInvertida.jpg", imageColoridaInvertida);
+    imwrite("../image/imageGrayInvertida.jpg", imageGrayInvertida);
+
     return 0; // Retorna 0, indicando que o programa terminou com sucesso
 }
