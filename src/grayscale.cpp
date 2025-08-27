@@ -1,6 +1,7 @@
 #include <iostream> // Biblioteca para entrada e saída de dados
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <vector>
 
 using namespace std; // Usado para evitar escrever "std::" antes de elementos da biblioteca padrão
 using namespace cv;  // Usado para evitar escrever "cv::" antes de elementos da biblioteca OpenCV
@@ -689,6 +690,78 @@ int main()
     imwrite("../image/rostoBlue.jpg", imageBlue);
 
     // atividade 5 Histograma (colorida e tons de cinza)
+    // https://www-baeldung-com.translate.goog/cs/image-histograms?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc
+    // Crie um vetor de contagem imagem colorida
+    int histColorida[256] = {0};
+
+    // Conte quantos pixels têm cada valor:
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            uchar pixel = image.at<uchar>(i, j);
+            histColorida[pixel]++;
+        }
+    }
+
+    // Desenhe o gráfico do histograma
+    int hist_Colorida_w = 512;
+    int hist_Colorida_h = 400;
+    int binColorida_w = cvRound((double)hist_Colorida_w / 256);
+    Mat histColoridaImagem(hist_Colorida_h, hist_Colorida_w, CV_8UC1, Scalar(255));
+
+    // Normaliza para caber na imagem
+    int max_val = *max_element(histColorida, histColorida + 256);
+    for (int i = 0; i < 256; i++)
+    {
+        histColorida[i] = ((double)histColorida[i] / max_val) * hist_Colorida_h;
+    }
+
+    // Desenha o histograma
+    for (int i = 0; i < 256; i++)
+    {
+        line(histColoridaImagem, Point(binColorida_w * i, hist_Colorida_h),
+             Point(binColorida_w * i, hist_Colorida_h - histColorida[i]),
+             Scalar(0), 1, 8, 0);
+    }
+
+    //---------------------------------------------------------------------
+    // Crie um vetor de contagem imagem cinza
+    int histCinza[256] = {0};
+
+    // Conte quantos pixels têm cada valor:
+    for (int i = 0; i < grayImage.rows; i++)
+    {
+        for (int j = 0; j < grayImage.cols; j++)
+        {
+            uchar pixel = grayImage.at<uchar>(i, j);
+            histCinza[pixel]++;
+        }
+    }
+
+    // Desenhe o gráfico do histograma
+    int histCinza_w = 512;
+    int histCinza_h = 400;
+    int binCinza_w = cvRound((double)histCinza_w / 256);
+    Mat histImagemCinza(histCinza_h, histCinza_w, CV_8UC1, Scalar(255));
+
+    // Normaliza para caber na imagem
+    max_val = *max_element(histCinza, histCinza + 256);
+    for (int i = 0; i < 256; i++)
+    {
+        histCinza[i] = ((double)histCinza[i] / max_val) * histCinza_h;
+    }
+
+    // Desenha o histograma
+    for (int i = 0; i < 256; i++)
+    {
+        line(histImagemCinza, Point(binCinza_w * i, histCinza_h),
+             Point(binCinza_w * i, histCinza_h - histCinza[i]),
+             Scalar(0), 1, 8, 0);
+    }
+
+    imwrite("../image/histograma_colorido.jpg", histColoridaImagem);
+    imwrite("../image/histograma_cinza.jpg", histImagemCinza);
 
     // atividade 6 Inverso da imagem
     // https://wiki.portugal-a-programar.pt/dev_net/vb.net/inverter_cor/
